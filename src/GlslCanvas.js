@@ -171,14 +171,21 @@ void main(){
             if (sandbox.resize()) {
                 sandbox.forceRender = true;
             }
-            
+
             sandbox.render();
-            window.requestAnimationFrame(RenderLoop);
+
+            setTimeout(() => {
+                window.requestAnimationFrame(RenderLoop);
+            }, 50);
         }
 
         // Start
         this.setMouse({ x: 0, y: 0 });
-        RenderLoop();
+
+        if (!options.pause) {
+            RenderLoop();
+        }
+
         return this;
     }
 
@@ -275,7 +282,7 @@ void main(){
         }
         this.buffers = buffers;
         this.texureIndex = this.BUFFER_COUNT;
-        
+
         // Trigger event
         this.trigger('load', {});
 
@@ -412,7 +419,7 @@ void main(){
 
     // ex: program.uniform('3f', 'position', x, y, z);
     uniform (method, type, name, ...value) { // 'value' is a method-appropriate arguments list
-        this.uniforms[name] = this.uniforms[name] || {}; 
+        this.uniforms[name] = this.uniforms[name] || {};
         let uniform = this.uniforms[name];
         let change = isDiff(uniform.value, value);
 

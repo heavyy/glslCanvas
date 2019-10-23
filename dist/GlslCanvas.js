@@ -1497,12 +1497,19 @@ var GlslCanvas = function () {
             }
 
             sandbox.render();
-            window.requestAnimationFrame(RenderLoop);
+
+            setTimeout(function () {
+                window.requestAnimationFrame(RenderLoop);
+            }, 50);
         }
 
         // Start
         this.setMouse({ x: 0, y: 0 });
-        RenderLoop();
+
+        if (!options.pause) {
+            RenderLoop();
+        }
+
         return this;
     }
 
